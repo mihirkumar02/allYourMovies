@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Landing from './components/home/Landing';
+import Movie from './components/home/Movie';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+import {Provider} from 'react-redux';
+import store from './store';
+
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+// HashRouter does not cause errors when deploying on GitHub pages
+// while BrowserRouter can cause issues. 
+
+// BrowserRouter takes only 1 element as a child div.!
+class App extends Component {
+
+  render(){   
+    return (
+      <Provider store={store}>
+        <BrowserRouter>
+          <div>
+            <Navbar />
+            <Switch>
+              <Route component={Landing} exact path="/"/>
+              <Route component={Movie} exact path="/movie/:id"/>
+            </Switch>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </Provider>
+    );
+  }
 }
 
 export default App;
